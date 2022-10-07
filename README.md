@@ -19,12 +19,14 @@ int main()
 }
 ```
 
-#To-dos and Other Notes
+# To-dos and Other Notes
+### Done ✓
+- [x] Do initial commit.
+- [x] Add functions for setting output color codes.
+
 ### Todo
 - [ ] Add functions for setting debug levels and names.
 
 ### In Progress
 - [ ] Wait for people to suggest things
-Done ✓
-- [x] Do initial commit.
-- [x] Add functions for setting output color codes.
+

@@ -4,13 +4,7 @@
 #include <string.h>
 #include <chrono>
 #include <ctime>
-enum LogLevel
-{
-    INFO = 0,
-    DEBUG = 1,
-    WARNING = 2,
-    ERROR = 3,
-};
+#include "LoggerParams.h"
 
 class Logger
 {
@@ -24,6 +18,7 @@ class Logger
             log(ERROR, "Logger successfully created!");
         }
         ~Logger(){};
+
         template <class... Args>
         void log(LogLevel logLevel, Args... args)
         {
@@ -32,18 +27,48 @@ class Logger
             switch(logLevel)
             {
                 case INFO:
-                    std::cout << "\033[1;90;97m INFO | [" <<  strtok(std::ctime(&time), "\n") << "] ";
+                    std::cout << "\x1b[" << infoColor.foreground << "m\x1b[" <<  infoColor.background << 'm' << "INFO | [" <<  strtok(std::ctime(&time), "\n") << "] ";
                     break;
                 case DEBUG:
-                    std::cout << "\033[1;90;92m DEBG | [" << strtok(std::ctime(&time), "\n") << "] ";
+                    std::cout << "\x1b[" << debugColor.foreground << "m\x1b[" << debugColor.background << 'm' << "DEBUG | ["  << strtok(std::ctime(&time), "\n") << "] ";
                     break;
                 case WARNING:
-                    std::cout << "\033[1;90;93m WARN | [" << strtok(std::ctime(&time), "\n") << "] ";
+                    std::cout << "\x1b[" << warningColor.foreground << "m\x1b[" << warningColor.background << 'm' << "WARNING | ["  << strtok(std::ctime(&time), "\n") << "] ";
                     break;
                 case ERROR:
-                    std::cout << "\033[1;90;91m ERRO | [" << strtok(std::ctime(&time), "\n") << "] ";
+                    std::cout << "\x1b[" << errorColor.foreground << "m\x1b[" << errorColor.background << 'm' << "ERROR | ["  << strtok(std::ctime(&time), "\n") << "] ";
                     break;
             }
             (std::cout << "\n\t" << ... << args) << "\x1B[0m\n";
         }
+
+        void setLogColors(LogLevel logLevel, LogColors foreground, LogColors background)
+        {
+            switch(logLevel)
+            {
+                case INFO:
+                    infoColor.background = background;
+                    infoColor.foreground = foreground;
+                    break;
+                case DEBUG:
+                    debugColor.background = background;
+                    debugColor.foreground = foreground;
+                    break;
+                case WARNING:
+                    warningColor.background = background;
+                    warningColor.foreground = foreground;
+                    break;
+                case ERROR:
+                    errorColor.background = background;
+                    errorColor.foreground = foreground;
+                    break;
+            }
+        }
+
+    private:
+        TextColor infoColor = {WHITE_TEXT, BLACK_BACKGROUND};
+        TextColor debugColor = {GREEN_TEXT, BLACK_BACKGROUND};
+        TextColor warningColor = {YELLOW_TEXT, BLACK_BACKGROUND};
+        TextColor errorColor = {RED_TEXT, BLACK_BACKGROUND};
+
 };

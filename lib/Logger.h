@@ -4,6 +4,7 @@
 #include <string.h>
 #include <chrono>
 #include <ctime>
+#include <thread>
 #include "LoggerParams.h"
 
 class Logger
@@ -70,5 +71,4 @@ class Logger
         TextColor debugColor = {GREEN_TEXT, BLACK_BACKGROUND};
         TextColor warningColor = {YELLOW_TEXT, BLACK_BACKGROUND};
         TextColor errorColor = {RED_TEXT, BLACK_BACKGROUND};
-
 };
